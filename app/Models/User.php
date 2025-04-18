@@ -18,7 +18,10 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'name', 'email', 'password', 'role'
+        'name',
+        'role',
+        'email',
+        'password',
     ];
     
     protected $casts = [
@@ -48,7 +51,7 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-    
+
     public function isAdmin()
     {
         return $this->role === 'Administrador';

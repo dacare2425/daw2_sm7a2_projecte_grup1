@@ -7,6 +7,10 @@ Route::get('/', function () {
     return view('inici');
 });
 
+Route::get('/info',function () {
+    return view('info');
+    });
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -21,5 +25,6 @@ Route::middleware('auth')->group(function () {
 use App\Http\Controllers\MasterController;
 
 Route::resource('masters', MasterController::class);
+Route::resource('alumnes', AlumneController::class);
 
 require __DIR__.'/auth.php';
