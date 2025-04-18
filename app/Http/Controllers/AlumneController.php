@@ -11,29 +11,67 @@ class AlumneController extends Controller
     public function index()
     {
         $alumnes = Alumne::with('master')->get();
-        return view('alumnes.index', compact('alumnes'));
+        return view('alumnes.llista', compact('alumnes'));
     }
 
     public function create()
     {
         $masters = Master::all();
-        return view('alumnes.create', compact('masters'));
+        return view('alumnes.crear', compact('masters'));
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'nom' => 'required',
-            'correu' => 'required|email|unique:alumnes',
-            'master_id' => 'required|exists:masters,id',
-            // Agrega más validaciones según necesites
+        $validated = $request->validate([
+            'nom' => 'required|string|max:255',
+            'correu' => 'required|email|unique:alumnes,correu',
+            'adreça' => 'required|string',
+            'ciutat' => 'required|string',
+            'pais' => 'required|string',
+            'telefon' => 'required|string',
+            'master_id' => 'required|exists:masters,id'
         ]);
 
-        Alumne::create($request->all());
+        Alumne::create($validated);
 
         return redirect()->route('alumnes.index')
             ->with('success', 'Alumne creat correctament');
     }
 
-    // Implementa los demás métodos
+    public function show(Alumne $alumne)
+    {
+        return view('alumnes.mostrar', compact('alumne'));
+    }
+
+    public function edit(Alumne $alumne)
+    {
+        $masters = Master::all();
+        return view('alumnes.editar', compact('alumne', 'masters'));
+    }
+
+    public function update(Request $request, Alumne $alumne)
+    {
+        $validated = $request->validate([
+            'nom' => 'required|string|max:255',
+            'correu' => 'required|email|unique:alumnes,correu,'.$alumne->id,
+            'adreça' => 'required|string',
+            'ciutat' => 'required|string',
+            'pais' => 'required|string',
+            'telefon' => 'required|string',
+            'master_id' => 'required|exists:masters,id'
+        ]);
+
+        $alumne->update($validated);
+
+        return redirect()->route('alumnes.index')
+            ->with('success', 'Alumne actualitzat correctament');
+    }
+
+    public function destroy(Alumne $alumne)
+    {
+        $alumne->delete();
+        
+        return redirect()->route('alumnes.index')
+            ->with('success', 'Alumne eliminat correctament');
+    }
 }
