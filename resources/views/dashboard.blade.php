@@ -17,4 +17,8 @@
     <div class="p-6 bg-white border-b border-gray-200">
         <a href="{{ route('register') }}">Crea un nou usuari</a><br>
     </div>
+    <div class="p-6 bg-white border-b border-gray-200">
+                    <a href="{{ url('masters/llista') }}">Masters: Visualització</a><br>
+                    <a href="{{ url('alumnes/llista') }}">Alumnes: Visualització</a>
+                </div>
 </x-app-layout>

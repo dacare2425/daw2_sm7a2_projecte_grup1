@@ -15,5 +15,19 @@
 <a href="{{ route('login') }}">Log in</a><br>
 @endauth
 @endif
+
+@if (Route::has('login'))
+    @auth
+        <!-- Mostrado cuando el usuario ESTÁ autenticado -->
+        <a href="{{ url('/dashboard') }}">Dashboard</a>
+    @else
+        <!-- Mostrado cuando el usuario NO ESTÁ autenticado -->
+        <a href="{{ route('login') }}">Log in</a>
+        
+        @if (Route::has('register'))
+            <a href="{{ route('register') }}">Register</a>
+        @endif
+    @endauth
+@endif
 </body>
 </html>

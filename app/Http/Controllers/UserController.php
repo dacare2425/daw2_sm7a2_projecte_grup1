@@ -5,84 +5,109 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules;
 
 class UserController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('can:manage-users')->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
+        $this->middleware('role:Administrador');
     }
 
+    // Listar todos los usuarios
     public function index()
     {
         $users = User::all();
-        return view('users.llista', compact('users'));
+        return view('users.index', compact('users'));
     }
 
+    // Mostrar formulario de creación
     public function create()
     {
-        return view('users.crear');
+        return view('users.create');
     }
 
+    // Almacenar nuevo usuario
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:8|confirmed',
-            'role' => 'required|in:Administrador,Consultor'
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'role' => ['required', 'in:Administrador,Consultor'],
         ]);
 
-        $validated['password'] = Hash::make($validated['password']);
-
-        User::create($validated);
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => $request->role,
+        ]);
 
         return redirect()->route('users.index')
-            ->with('success', 'Usuari creat correctament');
+            ->with('success', 'Usuario creado correctamente');
     }
 
+    // Mostrar detalles de un usuario
     public function show(User $user)
     {
-        return view('users.mostrar', compact('user'));
+        return view('users.show', compact('user'));
     }
 
+    // Mostrar formulario de edición
     public function edit(User $user)
     {
-        return view('users.editar', compact('user'));
+        return view('users.edit', compact('user'));
     }
 
+    // Actualizar usuario
     public function update(Request $request, User $user)
     {
         $rules = [
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,'.$user->id,
-            'role' => 'required|in:Administrador,Consultor'
+            'name' => ['required', 'string', 'max:255'],
+            'role' => ['required', 'in:Administrador,Consultor'],
         ];
 
-        if ($request->filled('password')) {
-            $rules['password'] = 'string|min:8|confirmed';
+        if ($request->email != $user->email) {
+            $rules['email'] = ['required', 'string', 'email', 'max:255', 'unique:users'];
         }
 
-        $validated = $request->validate($rules);
-
         if ($request->filled('password')) {
-            $validated['password'] = Hash::make($validated['password']);
-        } else {
-            unset($validated['password']);
+            $rules['password'] = ['required', 'confirmed', Rules\Password::defaults()];
         }
 
-        $user->update($validated);
+        $request->validate($rules);
+
+        $user->name = $request->name;
+        $user->role = $request->role;
+        
+        if ($request->email != $user->email) {
+            $user->email = $request->email;
+        }
+
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->password);
+        }
+
+        $user->save();
 
         return redirect()->route('users.index')
-            ->with('success', 'Usuari actualitzat correctament');
+            ->with('success', 'Usuario actualizado correctamente');
     }
 
+    // Eliminar usuario
     public function destroy(User $user)
     {
+        // No permitir auto-eliminación
+        if ($user->id === auth()->id()) {
+            return redirect()->route('users.index')
+                ->with('error', 'No puedes eliminar tu propio usuario');
+        }
+
         $user->delete();
-        
+
         return redirect()->route('users.index')
-            ->with('success', 'Usuari eliminat correctament');
+            ->with('success', 'Usuario eliminado correctamente');
     }
 }

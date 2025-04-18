@@ -18,13 +18,13 @@ class UsuarisAmbRolesSeeder extends Seeder
         [
             'name' => 'admin',
             'role' => 'Administrador',
-            'email' => 'leinad@fjeclot.net',
+            'email' => 'admin@gmail.com',
             'password' => Hash::make('123')
         ],
         [
             'name' => 'consultor',
             'role' => 'Consultor',
-            'email' => 'aletse@fjeclot.net',
+            'email' => 'consultor@gmail.com',
             'password' => Hash::make('123')
         ],
     ];
