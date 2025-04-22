@@ -11,21 +11,21 @@ class UserController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
-        $this->middleware('role:Administrador');
+        /*$this->middleware('auth');
+        $this->middleware('role:Administrador'); */
     }
 
     // Listar todos los usuarios
     public function index()
     {
         $users = User::all();
-        return view('users.index', compact('users'));
+        return view('users.llista', compact('users'));
     }
 
     // Mostrar formulario de creación
     public function create()
     {
-        return view('users.create');
+        return view('users.crear');
     }
 
     // Almacenar nuevo usuario
@@ -52,13 +52,13 @@ class UserController extends Controller
     // Mostrar detalles de un usuario
     public function show(User $user)
     {
-        return view('users.show', compact('user'));
+        return view('users.mostra', compact('user'));
     }
 
     // Mostrar formulario de edición
     public function edit(User $user)
     {
-        return view('users.edit', compact('user'));
+        return view('users.editar', compact('user'));
     }
 
     // Actualizar usuario

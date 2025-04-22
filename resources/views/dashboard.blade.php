@@ -21,4 +21,13 @@
                     <a href="{{ url('masters/llista') }}">Masters: Visualització</a><br>
                     <a href="{{ url('alumnes/llista') }}">Alumnes: Visualització</a>
                 </div>
+
+                @auth
+    @if(auth()->user()->role === 'Administrador')
+        <a href="{{ route('users.index') }}" class="btn btn-admin">Gestión de Usuarios</a>
+    @endif
+    
+    <a href="{{ route('masters.index') }}" class="btn btn-primary">Ver Masters</a>
+    <a href="{{ route('alumnos.index') }}" class="btn btn-primary">Ver Alumnos</a>
+@endauth
 </x-app-layout>
