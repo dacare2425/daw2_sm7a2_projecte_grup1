@@ -79,6 +79,9 @@
             <div class="btn-group">
                 <a href="{{ route('login') }}" class="btn btn-primary">Log in</a>
             </div>
+            <div class="btn-group">
+                <a href="{{ route('info') }}" class="btn btn-primary">Info</a>
+            </div>
         @endauth
     @endif
 </body>

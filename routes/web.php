@@ -10,6 +10,10 @@ Route::get('/', function () {
     return view('inici');
 })->name('inici');
 
+Route::get('/info', function () {
+    return view('info');
+})->name('info');
+
 require __DIR__.'/auth.php';
 
 
