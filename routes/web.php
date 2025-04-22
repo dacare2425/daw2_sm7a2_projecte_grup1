@@ -11,8 +11,11 @@ Route::get('/', function () {
     return view('inici');
 })->name('inici');
 
+require __DIR__.'/auth.php';
+
 
 Route::middleware(['auth'])->group(function () {
+
     Route::middleware(['adminAuth'])->group(function () {
         Route::get('/dashboard', function(){
             return view('dashboard');
@@ -29,24 +32,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/dashboard-consultor', function(){
             return view('dashboard-consultor');
         })->name('dashboard-consultor');
-
-        Route::resource('masters', MasterController::class);
-        Route::resource('alumnes', AlumneController::class);
     });
-    
-    /* Route::middleware(['consultor'])->group(function () {
-        Route::get('/masters', [MasterController::class, 'index'])->name('masters.llista');
-        Route::get('/alumnos', [AlumneController::class, 'index'])->name('alumnos.llista');
-    }); */
+
+    Route::resource('masters', MasterController::class);
+    Route::resource('alumnes', AlumneController::class);
 });
 
-/* Route::get('/dashboard-consultor', function () {
-    return view('dashboard-consultor');
-})->name('dashboard-consultor');
-
-
-Route::resource('masters', MasterController::class);
-Route::resource('alumnes', AlumneController::class); */
-
-
-require __DIR__.'/auth.php';

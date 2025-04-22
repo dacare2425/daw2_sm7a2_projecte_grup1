@@ -10,8 +10,6 @@
         <p class="card-text">
             <strong>Correu:</strong> {{ $user->email }}<br>
             <strong>Rol:</strong> {{ $user->role }}<br>
-            <strong>Creat el:</strong> {{ $user->created_at->format('d/m/Y H:i') }}<br>
-            <strong>Actualitzat el:</strong> {{ $user->updated_at->format('d/m/Y H:i') }}
         </p>
         
         <div class="d-flex gap-2">
