@@ -19,12 +19,14 @@
         </p>
         
         <div class="d-flex gap-2">
-            <a href="{{ route('alumnes.edit', $alumne->id) }}" class="btn btn-warning">Editar</a>
-            <form action="{{ route('alumnes.destroy', $alumne->id) }}" method="POST">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn btn-danger">Eliminar</button>
-            </form>
+            @if(auth()->check() && auth()->user()->isAdmin())
+                <a href="{{ route('alumnes.edit', $alumne->id) }}" class="btn btn-warning">Editar</a>
+                <form action="{{ route('alumnes.destroy', $alumne->id) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                </form>
+            @endif
             <a href="{{ route('alumnes.index') }}" class="btn btn-secondary">Tornar</a>
         </div>
     </div>
