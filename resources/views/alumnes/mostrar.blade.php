@@ -27,6 +27,9 @@
                     <button type="submit" class="btn btn-danger">Eliminar</button>
                 </form>
             @endif
+            <a href="{{ route('alumnes.exportPdf', $alumne->id) }}" class="">
+                Descarregar PDF
+            </a>
             <a href="{{ route('alumnes.index') }}" class="btn btn-secondary">Tornar</a>
         </div>
     </div>

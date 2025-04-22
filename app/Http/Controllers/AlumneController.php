@@ -5,9 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\Alumne;
 use App\Models\Master;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class AlumneController extends Controller
 {
+
+public function exportPdf($id)
+{
+    $alumne = Alumne::findOrFail($id);
+    $pdf = Pdf::loadView('alumnes.pdf', compact('alumne'));
+    return $pdf->download('alumne-'.$alumne->id.'.pdf');
+}
     public function index()
     {
         $alumnes = Alumne::with('master')->get();

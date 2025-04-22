@@ -78,10 +78,6 @@
         @else
             <div class="btn-group">
                 <a href="{{ route('login') }}" class="btn btn-primary">Log in</a>
-                
-                @if (Route::has('register'))
-                    <a href="{{ route('register') }}" class="btn btn-outline">Register</a>
-                @endif
             </div>
         @endauth
     @endif

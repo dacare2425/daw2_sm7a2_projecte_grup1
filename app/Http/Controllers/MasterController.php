@@ -4,9 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\Master;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class MasterController extends Controller
 {
+
+public function exportPdf($id)
+{
+    $master = Master::findOrFail($id);
+    $pdf = Pdf::loadView('masters.pdf', compact('master'));
+    return $pdf->download('master-'.$master->id.'.pdf');
+}
     /**
      * Display a listing of the resource.
      */

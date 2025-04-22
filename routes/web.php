@@ -33,8 +33,10 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('masters', [MasterController::class, 'index'])->name('masters.index');
     Route::get('masters/{master}', [MasterController::class, 'show'])->name('masters.show');
+    Route::get('/masters/{master}/pdf', [MasterController::class, 'exportPdf'])->name('masters.exportPdf');
     
     Route::get('alumnes', [AlumneController::class, 'index'])->name('alumnes.index');
     Route::get('alumnes/{alumne}', [AlumneController::class, 'show'])->name('alumnes.show');
+    Route::get('/alumnes/{alumne}/pdf', [AlumneController::class, 'exportPdf'])->name('alumnes.exportPdf');
 });
 

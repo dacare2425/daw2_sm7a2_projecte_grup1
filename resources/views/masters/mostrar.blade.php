@@ -23,6 +23,9 @@
                     <button type="submit" class="btn btn-danger">Eliminar</button>
                 </form>
             @endif
+            <a href="{{ route('masters.exportPdf', $master->id) }}" class="btn btn-dark">
+                Descarregar PDF
+            </a>
             <a href="{{ route('masters.index') }}" class="btn btn-secondary">Tornar</a>
         </div>
     </div>
