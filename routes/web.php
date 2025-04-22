@@ -11,9 +11,6 @@ Route::get('/', function () {
     return view('inici');
 })->name('inici');
 
-Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login']);
-Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 
 Route::middleware(['auth'])->group(function () {
     Route::middleware(['adminAuth'])->group(function () {
@@ -26,13 +23,22 @@ Route::middleware(['auth'])->group(function () {
 
         Route::resource('users', UserController::class);
         Route::resource('masters', MasterController::class);
-        Route::resource('alumnos', AlumnoController::class);
+        Route::resource('alumnes', AlumneController::class);
     });
     
     /* Route::middleware(['consultor'])->group(function () {
         Route::get('/masters', [MasterController::class, 'index'])->name('masters.llista');
-        Route::get('/alumnos', [AlumnoController::class, 'index'])->name('alumnos.llista');
+        Route::get('/alumnos', [AlumneController::class, 'index'])->name('alumnos.llista');
     }); */
 });
+
+Route::get('/dashboard-consultor', function () {
+    return view('dashboard-consultor');
+})->name('dashboard-consultor');
+
+
+Route::resource('masters', MasterController::class);
+Route::resource('alumnes', AlumneController::class);
+
 
 require __DIR__.'/auth.php';

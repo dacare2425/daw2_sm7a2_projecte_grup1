@@ -7,19 +7,15 @@
 </head>
 <body>
 <p>Pàgina inicial de l'aplicació web</p>
-<a href="{{ url('/info') }}">Info</a><br>
-@if (Route::has('login'))
-@auth
-<a href="{{ url('/dashboard') }}">Dashboard</a>
-@else
-<a href="{{ route('login') }}">Log in</a><br>
-@endauth
-@endif
 
 @if (Route::has('login'))
     @auth
         <!-- Mostrado cuando el usuario ESTÁ autenticado -->
-        <a href="{{ url('/dashboard') }}">Dashboard</a>
+        <a href="{{ route('dashboard') }}">Dashboard</a>
+        <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit">Logout</button>
+        </form>
     @else
         <!-- Mostrado cuando el usuario NO ESTÁ autenticado -->
         <a href="{{ route('login') }}">Log in</a>

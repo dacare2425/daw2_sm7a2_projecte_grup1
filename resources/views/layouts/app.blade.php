@@ -9,11 +9,11 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-            <a class="navbar-brand" href="/">Escola Masters</a>
+            <a class="navbar-brand" href="/">CalpaMafuta</a>
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('masters.index') }}">Masters</a>
+                        <a class="nav-link" href="{{ route('masters.index') }}">Masters i Alumnes</a>
                     </li>
                 </ul>
             </div>
