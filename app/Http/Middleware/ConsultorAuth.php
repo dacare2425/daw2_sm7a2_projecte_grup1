@@ -15,8 +15,8 @@ class ConsultorAuth
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth()->user()->role != "Consutlor") {
-            return redirect('error')->with('error', 'Error: usuario validado con el rol básico');
+        if (Auth()->user()->role != "Consultor") {
+            return redirect('dashboard-consultor')->with('error', 'Error: usuario validado con el rol básico');
         }
         return $next($request);
     }
