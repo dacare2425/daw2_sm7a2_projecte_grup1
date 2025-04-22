@@ -6,7 +6,6 @@ use App\Http\Controllers\AlumneController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-// Rutas públicas
 Route::get('/', function () {
     return view('inici');
 })->name('inici');
@@ -20,8 +19,6 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/dashboard', function(){
             return view('dashboard');
         })->name('dashboard');
-    /* Route::get('/users', [UserController::class, 'index'])->name('users.llista');
-        Route::resource('users', UserController::class)->except(['index']); */
 
         Route::resource('users', UserController::class);
         Route::resource('masters', MasterController::class);
@@ -34,7 +31,10 @@ Route::middleware(['auth'])->group(function () {
         })->name('dashboard-consultor');
     });
 
-    Route::resource('masters', MasterController::class);
-    Route::resource('alumnes', AlumneController::class);
+    Route::get('masters', [MasterController::class, 'index'])->name('masters.index');
+    Route::get('masters/{master}', [MasterController::class, 'show'])->name('masters.show');
+    
+    Route::get('alumnes', [AlumneController::class, 'index'])->name('alumnes.index');
+    Route::get('alumnes/{alumne}', [AlumneController::class, 'show'])->name('alumnes.show');
 });
 

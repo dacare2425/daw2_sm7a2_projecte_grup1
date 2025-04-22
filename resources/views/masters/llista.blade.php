@@ -1,9 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
+
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h1>Llistat de Masters</h1>
-    <a href="{{ route('masters.create') }}" class="btn btn-primary">Nou Master</a>
+    @if(auth()->user()->isAdmin())
+        <a href="{{ route('masters.create') }}" class="btn btn-primary">Nou Master</a>
+    @endif
 </div>
 
 <table class="table table-striped">
@@ -25,12 +28,14 @@
             <td>{{ $master->director }}</td>
             <td>
                 <a href="{{ route('masters.show', $master->id) }}" class="btn btn-sm btn-info">Veure</a>
-                <a href="{{ route('masters.edit', $master->id) }}" class="btn btn-sm btn-warning">Editar</a>
-                <form action="{{ route('masters.destroy', $master->id) }}" method="POST" style="display:inline;">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
-                </form>
+                @if(auth()->user()->isAdmin())
+                    <a href="{{ route('masters.edit', $master->id) }}" class="btn btn-sm btn-warning">Editar</a>
+                    <form action="{{ route('masters.destroy', $master->id) }}" method="POST" style="display:inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
+                    </form>
+                @endif
             </td>
         </tr>
         @endforeach
