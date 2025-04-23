@@ -13,14 +13,12 @@
         </p>
         
         <div class="d-flex gap-2">
-            @can('manage-users')
             <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning">Editar</a>
             <form action="{{ route('users.destroy', $user->id) }}" method="POST">
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="btn btn-danger">Eliminar</button>
             </form>
-            @endcan
             <a href="{{ route('users.index') }}" class="btn btn-secondary">Tornar</a>
         </div>
     </div>
